@@ -2,11 +2,11 @@
 
 ## Install npm packages
 
-    `npm install`
+    npm install
 
 ## Run the app
 
-    `node server.js`
+    node server.js
 
 # REST API
 
