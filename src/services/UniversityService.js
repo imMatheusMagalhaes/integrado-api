@@ -84,9 +84,9 @@ module.exports = class UniversityService {
   _hasRequiredProperty = ({ body, method }) => {
     if (method === "create") {
       body["state-province"]
-      return universityProperties.every((property) => body.hasOwnProperty(property));
+      return this.universityProperties.every((property) => body.hasOwnProperty(property));
     } else if (method === "update") {
-      return Object.keys(body).every((property) => requireUpdateProperties.includes(property));
+      return Object.keys(body).every((property) => this.requireUpdateProperties.includes(property));
     } else {
       throw new Error("method not provided")
     }
