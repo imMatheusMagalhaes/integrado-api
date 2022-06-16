@@ -11,7 +11,7 @@ const server_port = process.env.SERVER_PORT || 3000;
 
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
-server.use("/university", universityController.getRoutes());
+server.use("/universities", universityController.getRoutes());
 server.get("/", (_, response) => { response.sendStatus(404) });
 
 mongoose

@@ -1,4 +1,5 @@
-const universities = [
+"use strict"
+const countries = [
   "argentina",
   "brasil",
   "chile",
@@ -8,4 +9,4 @@ const universities = [
   "suriname",
   "uruguay",
 ];
-module.exports = { universities };
+module.exports = { countries };

@@ -1,4 +1,4 @@
-"use strict";
+"use strict"
 module.exports = class UniversityRepository {
   constructor(model) { this.model = model }
   create = async (obj) => {
@@ -10,8 +10,8 @@ module.exports = class UniversityRepository {
     return data;
   };
   find = async (obj) => {
-    const { target_object } = obj;
-    const data = await this.model.find(target_object).lean();
+    const { target_object, options } = obj;
+    const data = await this.model.find(target_object, { name: 1, country: 1, "state-province": 1 }, options);
     this._checkIfError({ data, obj, method: this.find.name });
     return data;
   };

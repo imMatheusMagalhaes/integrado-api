@@ -1,4 +1,4 @@
-"use strict";
+"use strict"
 const { model, Schema, models } = require("mongoose");
 
 const UniversityModel = (university) => {

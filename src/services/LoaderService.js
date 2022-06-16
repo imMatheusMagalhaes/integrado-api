@@ -1,3 +1,4 @@
+"use strict"
 const axios = require("axios");
 const { universities } = require("../helpers/Universities");
 const UniversityModel = require("../models/UniversityModel");
@@ -5,13 +6,16 @@ const UniversityRepository = require("../repositories/UniversityRepository");
 
 module.exports = class LoaderService {
   runLoaders = async () => {
+    this._initialDbPopulation()
+  };
+  _initialDbPopulation = async () => {
     return await Promise.all(
       universities.map(async (university) => {
         const data = await this._getUniversityData(university);
         await this._saveUniversityData({ data, university });
       })
     );
-  };
+  }
   _saveUniversityData = async (params) => {
     const { data, university } = params;
     try {

@@ -1,3 +1,4 @@
+"use strict"
 const universityProperties = [
   "domains",
   "web_pages",

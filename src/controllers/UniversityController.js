@@ -1,6 +1,7 @@
+"use strict"
 const express = require("express");
 const HttpStatusCode = require("../helpers/HttpStatusCode");
-const { universities } = require("../helpers/Universities");
+const { countries } = require("../helpers/Universities");
 const UniversityModel = require("../models/UniversityModel");
 const UniversityService = require("../services/UniversityService");
 module.exports = class UniversityController {
@@ -17,53 +18,53 @@ module.exports = class UniversityController {
     return this.router;
   };
   _create = (router) => {
-    return router.post("/:university", this._hasValidUniversity, async (request, response) => {
-      const { body, params: { university } } = request;
-      const service = new UniversityService(UniversityModel(university));
+    return router.post("/", this._hasValidUniversity, async (request, response) => {
+      const { body, query: { country } } = request;
+      const service = new UniversityService(UniversityModel(country));
       const { status, data } = await service.create(body);
       return response.status(status).send(data);
     });
   };
   _findAll = (router) => {
-    return router.get("/:university", this._hasValidUniversity, async (request, response) => {
-      const { params: { university } } = request;
-      const service = new UniversityService(UniversityModel(university));
-      const { status, data } = await service.findAll();
+    return router.get("/", this._hasValidUniversity, async (request, response) => {
+      const { query: { page, country } } = request;
+      const service = new UniversityService(UniversityModel(country));
+      const { status, data } = await service.findAll({ country, page });
       return response.status(status).send(data);
     }
     );
   };
   _delete = (router) => {
-    return router.delete("/:university/:id", this._hasValidUniversity, async (request, response) => {
-      const { params: { university, id } } = request;
-      const service = new UniversityService(UniversityModel(university));
+    return router.delete("/:id", this._hasValidUniversity, async (request, response) => {
+      const { params: { id }, query: { country } } = request;
+      const service = new UniversityService(UniversityModel(country));
       const { status, data } = await service.delete(id);
       return response.status(status).send(data);
     });
   };
   _findOne = (router) => {
-    return router.get("/:university/:id", this._hasValidUniversity, async (request, response) => {
-      const { params: { university, id } } = request;
-      const service = new UniversityService(UniversityModel(university));
+    return router.get("/:id", this._hasValidUniversity, async (request, response) => {
+      const { params: { id }, query: { country } } = request;
+      const service = new UniversityService(UniversityModel(country));
       const { status, data } = await service.findOne(id);
       return response.status(status).send(data);
     }
     );
   };
   _update = (router) => {
-    return router.put("/:university/:id", this._hasValidUniversity, async (request, response) => {
-      const { body, params: { university, id } } = request;
-      const service = new UniversityService(UniversityModel(university));
+    return router.put("/:id", this._hasValidUniversity, async (request, response) => {
+      const { body, params: { id }, query: { country } } = request;
+      const service = new UniversityService(UniversityModel(country));
       const { status, data } = await service.update({ body, id });
       return response.status(status).send(data);
     });
   };
   _hasValidUniversity = (request, response, next) => {
-    const { params: { university } } = request;
-    const is_valid = universities.some((validUniversity) => {
-      return validUniversity === university;
+    const { query: { country } } = request;
+    const is_valid = countries.some((validUniversity) => {
+      return validUniversity === country;
     });
-    if (is_valid) return next();
+    if (is_valid || !country) return next();
     return response.sendStatus(HttpStatusCode.BAD_REQUEST);
   };
 };
