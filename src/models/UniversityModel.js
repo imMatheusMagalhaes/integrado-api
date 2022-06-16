@@ -1,7 +1,6 @@
 "use strict"
-const { model, Schema, models } = require("mongoose");
-
 const UniversityModel = (country) => {
+  const { model, Schema, models } = require("mongoose");
   const schema = new Schema({
     domains: { type: [String] },
     web_pages: { type: [String] },

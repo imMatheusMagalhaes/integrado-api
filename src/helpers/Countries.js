@@ -1,5 +1,5 @@
 "use strict"
-const countries = [
+module.exports = [
   "argentina",
   "brazil",
   "chile",
@@ -9,4 +9,3 @@ const countries = [
   "suriname",
   "uruguay",
 ];
-module.exports = { countries };

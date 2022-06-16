@@ -1,5 +1,5 @@
 "use strict"
-const HttpStatusCode = {
+module.exports = {
   CONTINUE: 100,
   SWITCHING_PROTOCOLS: 101,
   PROCESSING: 102,
@@ -62,5 +62,3 @@ const HttpStatusCode = {
   NOT_EXTENDED: 510,
   NETWORK_AUTHENTICATION_REQUIRED: 511,
 };
-
-module.exports = HttpStatusCode;

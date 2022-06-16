@@ -1,5 +1,5 @@
 "use strict"
-module.exports = class UniversityRepository {
+class UniversityRepository {
   constructor(model) { this.model = model }
   create = async (obj) => {
     const { target_object } = obj;
@@ -35,4 +35,6 @@ module.exports = class UniversityRepository {
     }
   }
   objIsEmpty = (target_object) => Object.keys(target_object).length === 0
+
 };
+module.exports = { UniversityRepository }

@@ -1,12 +1,12 @@
 "use strict"
-const axios = require("axios");
-const { default: mongoose } = require("mongoose");
-const { countries } = require("../helpers/Countries");
-const UniversityModel = require("../models/UniversityModel");
-const UniversityRepository = require("../repositories/UniversityRepository");
-
-module.exports = class LoaderService {
-  constructor() { this.teste = 0 }
+class LoaderService {
+  constructor() {
+    this.axios = require("axios")
+    this.mongoose = require("mongoose")
+    this.countries = require("../helpers/Countries")
+    this.universityModel = require("../models/UniversityModel")
+    this.universityRepository = require("../repositories/UniversityRepository")
+  }
   runLoaders = async () => {
     if (!await this._dbIsPopulated()) {
       await this._initialDbPopulation()
@@ -15,7 +15,7 @@ module.exports = class LoaderService {
   };
   _initialDbPopulation = async () => {
     return await Promise.all(
-      countries.map(async (country) => {
+      this.countries.map(async (country) => {
         const data = await this._getUniversityData(country);
         await this._saveUniversityData({ data, country });
       })
@@ -24,7 +24,7 @@ module.exports = class LoaderService {
   _saveUniversityData = async (params) => {
     const { data, country } = params;
     try {
-      const universityRepository = new UniversityRepository(UniversityModel(country));
+      const universityRepository = new this.universityRepository.UniversityRepository(this.universityModel(country));
       return await universityRepository.create({ target_object: data });
     } catch (error) {
       console.error(error.toString());
@@ -33,7 +33,7 @@ module.exports = class LoaderService {
   };
   _getUniversityData = async (university) => {
     try {
-      const { data } = await axios.get(`http://universities.hipolabs.com/search?country=${university}`);
+      const { data } = await this.axios.get(`http://universities.hipolabs.com/search?country=${university}`);
       return data;
     } catch (error) {
       console.error(error.toString());
@@ -42,7 +42,9 @@ module.exports = class LoaderService {
   };
   _dbIsPopulated = async () => {
     console.info("[INFO] - checking if the database is populated...")
-    const collections = await mongoose.connection.db.listCollections().toArray().then((response) => response)
+    const collections = await this.mongoose.connection.db.listCollections().toArray().then((response) => response)
     return collections.length !== 0
   }
 };
+
+module.exports = { LoaderService }
