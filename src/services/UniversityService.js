@@ -1,6 +1,6 @@
 "use strict"
 const HttpStatusCode = require("../helpers/HttpStatusCode");
-const { countries } = require("../helpers/Universities");
+const { countries } = require("../helpers/Countries");
 const { universityProperties, requireUpdateProperties } = require("../helpers/UniversityProperties");
 const UniversityModel = require("../models/UniversityModel");
 const UniversityRepository = require("../repositories/UniversityRepository");
@@ -57,7 +57,7 @@ module.exports = class UniversityService {
         return { status: HttpStatusCode.INTERNAL_SERVER_ERROR, data: { message: error.toString() } };
       }
     } else {
-      return { status: HttpStatusCode.BAD_REQUEST, data: { message: "property required no provided" } };
+      return { status: HttpStatusCode.BAD_REQUEST, data: { message: "properties not valids" } };
     }
   };
 
@@ -78,13 +78,10 @@ module.exports = class UniversityService {
   }
   _hasRequiredProperty = ({ body, method }) => {
     if (method === "create") {
-      return universityProperties.every((property) => {
-        return body.hasOwnProperty(property);
-      });
+      body["state-province"]
+      return universityProperties.every((property) => body.hasOwnProperty(property));
     } else if (method === "update") {
-      return requireUpdateProperties.every((property) => {
-        return body.hasOwnProperty(property);
-      });
+      return Object.keys(body).every((property) => requireUpdateProperties.includes(property));
     } else {
       throw new Error("method not provided")
     }

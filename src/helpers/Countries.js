@@ -1,10 +1,10 @@
 "use strict"
 const countries = [
   "argentina",
-  "brasil",
+  "brazil",
   "chile",
   "colombia",
-  "paraguai",
+  "paraguay",
   "peru",
   "suriname",
   "uruguay",
