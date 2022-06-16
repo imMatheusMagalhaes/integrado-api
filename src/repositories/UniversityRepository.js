@@ -1,9 +1,6 @@
 "use strict";
-const University = require("../models/UniversityModel");
 module.exports = class UniversityRepository {
-  constructor() {
-    this.model = University;
-  }
+  constructor(model) { this.model = model }
   create = async (obj) => {
     const { target_object } = obj;
     const data = await this.model.insertMany(target_object, {
@@ -20,14 +17,7 @@ module.exports = class UniversityRepository {
   };
   update = async (obj) => {
     const { target_object, desired_object } = obj;
-    const data = await this.model.findOneAndUpdate(
-      target_object,
-      desired_object,
-      {
-        new: true,
-        lean: true,
-      }
-    );
+    const data = await this.model.findOneAndUpdate(target_object, desired_object, { new: true, lean: true });
     this._checkIfError({ data, obj, method: this.update.name });
     return data;
   };
