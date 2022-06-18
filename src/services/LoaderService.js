@@ -31,9 +31,9 @@ class LoaderService {
       throw error
     }
   }
-  _getUniversityData = async (university) => {
+  _getUniversityData = async (country) => {
     try {
-      const { data } = await this.axios.get(`http://universities.hipolabs.com/search?country=${university}`)
+      const { data } = await this.axios.get(`http://universities.hipolabs.com/search?country=${country}`)
       return data
     } catch (error) {
       console.error(error.toString())
