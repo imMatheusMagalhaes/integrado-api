@@ -60,7 +60,7 @@ class UniversityController {
   }
   _hasValidUniversity = (request, response, next) => {
     const { query: { country }, method, body } = request
-    const is_valid = this.countries.some((validUniversity) => validUniversity === country)
+    const is_valid = this.countries.some((validCountry) => validCountry === country)
     if (method !== "PUT")
       if (is_valid || !country) return next()
     if (is_valid && Object.keys(body).length !== 0) return next()
