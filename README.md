@@ -1,6 +1,8 @@
 # Integrado API
 
-### NodeJS version => 16.15.1
+### NodeJS version 
+    <= v16.15.1
+    >= v14.19.3
 
 ## Install npm packages
 
