@@ -12,39 +12,39 @@ class LoaderService {
       await this._initialDbPopulation()
       console.info("[INFO] - populate db")
     }
-  };
+  }
   _initialDbPopulation = async () => {
     return await Promise.all(
       this.countries.map(async (country) => {
-        const data = await this._getUniversityData(country);
-        await this._saveUniversityData({ data, country });
+        const data = await this._getUniversityData(country)
+        await this._saveUniversityData({ data, country })
       })
-    );
+    )
   }
   _saveUniversityData = async (params) => {
-    const { data, country } = params;
+    const { data, country } = params
     try {
-      const universityRepository = new this.universityRepository.UniversityRepository(this.universityModel(country));
-      return await universityRepository.create({ target_object: data });
+      const universityRepository = new this.universityRepository.UniversityRepository(this.universityModel(country))
+      return await universityRepository.create({ target_object: data })
     } catch (error) {
-      console.error(error.toString());
-      throw error;
+      console.error(error.toString())
+      throw error
     }
-  };
+  }
   _getUniversityData = async (university) => {
     try {
-      const { data } = await this.axios.get(`http://universities.hipolabs.com/search?country=${university}`);
-      return data;
+      const { data } = await this.axios.get(`http://universities.hipolabs.com/search?country=${university}`)
+      return data
     } catch (error) {
-      console.error(error.toString());
-      throw error;
+      console.error(error.toString())
+      throw error
     }
-  };
+  }
   _dbIsPopulated = async () => {
     console.info("[INFO] - checking if the database is populated...")
     const collections = await this.mongoose.connection.db.listCollections().toArray().then((response) => response)
     return collections.length !== 0
   }
-};
+}
 
 module.exports = { LoaderService }
